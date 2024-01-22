@@ -29,6 +29,8 @@ public class Application {
         // after will be here
 
         while (true) {
+            try {
+
             System.out.println("Enter the operation to perform");
             System.out.println("1- Deposit");
             System.out.println("2- Withdraw");
@@ -60,7 +62,11 @@ public class Application {
                     break;
             }
         }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
     }
 
+    }
 }

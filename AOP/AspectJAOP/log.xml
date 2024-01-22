@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2024-01-22T14:14:28.745848900Z</date>
+  <millis>1705932868745</millis>
+  <nanos>848900</nanos>
+  <sequence>0</sequence>
+  <logger>banqueAspects.LoggingAspect</logger>
+  <level>INFO</level>
+  <class>service.ServiceBanqueImpl</class>
+  <method>addCompte_aroundBody1$advice</method>
+  <thread>1</thread>
+  <message>--------------------------------------------------
+</message>
+</record>
+<record>
+  <date>2024-01-22T14:14:28.752955100Z</date>
+  <millis>1705932868752</millis>
+  <nanos>955100</nanos>
+  <sequence>1</sequence>
+  <logger>banqueAspects.LoggingAspect</logger>
+  <level>INFO</level>
+  <class>service.ServiceBanqueImpl</class>
+  <method>addCompte_aroundBody1$advice</method>
+  <thread>1</thread>
+  <message>log around before addCompte</message>
+</record>
+<record>
+  <date>2024-01-22T14:14:28.752955100Z</date>
+  <millis>1705932868752</millis>
+  <nanos>955100</nanos>
+  <sequence>2</sequence>
+  <logger>banqueAspects.LoggingAspect</logger>
+  <level>INFO</level>
+  <class>service.ServiceBanqueImpl</class>
+  <method>addCompte_aroundBody1$advice</method>
+  <thread>1</thread>
+  <message>log around after addCompte</message>
+</record>
+<record>
+  <date>2024-01-22T14:14:28.753959100Z</date>
+  <millis>1705932868753</millis>
+  <nanos>959100</nanos>
+  <sequence>3</sequence>
+  <logger>banqueAspects.LoggingAspect</logger>
+  <level>INFO</level>
+  <class>service.ServiceBanqueImpl</class>
+  <method>addCompte_aroundBody1$advice</method>
+  <thread>1</thread>
+  <message>time taken by addCompte is 0 ms</message>
+</record>
+<record>
+  <date>2024-01-22T14:14:28.753959100Z</date>
+  <millis>1705932868753</millis>
+  <nanos>959100</nanos>
+  <sequence>4</sequence>
+  <logger>banqueAspects.LoggingAspect</logger>
+  <level>INFO</level>
+  <class>service.ServiceBanqueImpl</class>
+  <method>addCompte_aroundBody1$advice</method>
+  <thread>1</thread>
+  <message>--------------------------------------------------
+</message>
+</record>
+<record>
+  <date>2024-01-22T14:14:31.533544900Z</date>
+  <millis>1705932871533</millis>
+  <nanos>544900</nanos>
+  <sequence>5</sequence>
+  <logger>banqueAspects.LoggingAspect</logger>
+  <level>INFO</level>
+  <class>service.ServiceBanqueImpl</class>
+  <method>consulter_aroundBody7$advice</method>
+  <thread>1</thread>
+  <message>--------------------------------------------------
+</message>
+</record>
+<record>
+  <date>2024-01-22T14:14:31.535526300Z</date>
+  <millis>1705932871535</millis>
+  <nanos>526300</nanos>
+  <sequence>6</sequence>
+  <logger>banqueAspects.LoggingAspect</logger>
+  <level>INFO</level>
+  <class>service.ServiceBanqueImpl</class>
+  <method>consulter_aroundBody7$advice</method>
+  <thread>1</thread>
+  <message>log around before consulter</message>
+</record>
+<record>
+  <date>2024-01-22T14:14:31.536538200Z</date>
+  <millis>1705932871536</millis>
+  <nanos>538200</nanos>
+  <sequence>7</sequence>
+  <logger>banqueAspects.LoggingAspect</logger>
+  <level>INFO</level>
+  <class>service.ServiceBanqueImpl</class>
+  <method>consulter_aroundBody7$advice</method>
+  <thread>1</thread>
+  <message>log around after consulter</message>
+</record>
+<record>
+  <date>2024-01-22T14:14:31.537521100Z</date>
+  <millis>1705932871537</millis>
+  <nanos>521100</nanos>
+  <sequence>8</sequence>
+  <logger>banqueAspects.LoggingAspect</logger>
+  <level>INFO</level>
+  <class>service.ServiceBanqueImpl</class>
+  <method>consulter_aroundBody7$advice</method>
+  <thread>1</thread>
+  <message>time taken by consulter is 0 ms</message>
+</record>
+<record>
+  <date>2024-01-22T14:14:31.537521100Z</date>
+  <millis>1705932871537</millis>
+  <nanos>521100</nanos>
+  <sequence>9</sequence>
+  <logger>banqueAspects.LoggingAspect</logger>
+  <level>INFO</level>
+  <class>service.ServiceBanqueImpl</class>
+  <method>consulter_aroundBody7$advice</method>
+  <thread>1</thread>
+  <message>--------------------------------------------------
+</message>
+</record>
+</log>
