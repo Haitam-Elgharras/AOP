@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="template1">
+<head>
+    <meta charset="UTF-8">
+    <title>Nouveau patient</title>
+   </head>
+<body>
+
+<div layout:fragment="content">
+
+<div class="container">
+
+    <div class="row justify-content-center align-items-center"
+         style="height: 90vh;"
+    >
+        <div class="col-6">
+          <div class="card">
+              <div class="p-3" style="background-color: #eee">
+              <div class="card-header">
+                  <h1 class="text-center fs-3">Nouveau patient</h1>
+              </div>
+              <div class="card-body">
+                <form th:action="@{/savePatient}" method="post">
+                    <div class="mb-3">
+                        <label for="nom" class="form-label">Nom</label>
+                        <input type="text" class="form-control" id="nom" name="nom" th:value="${patient.nom}" required>
+                        <span class="text-danger" th:errors="${patient.nom}"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="dateNaissance" class="form-label">Date de naissance</label>
+                        <input type="date" class="form-control" id="dateNaissance" name="dateNaissance" th:value="${patient.dateNaissance}" required>
+                        <span class="text-danger" th:errors="${patient.dateNaissance}"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="malade" class="form-label">Malade</label>
+                        <input type="checkbox" class="form-check-input" id="malade" th:checked="${patient.malade}" name="malade">
+                        <span class="text-danger" th:errors="${patient.malade}"></span>
+                    </div>
+                    <div class="mb-3">
+                        <!--            <label for="rendezVous" class="form-label">Rendez-vous</label>-->
+                        <!--            <input type="datetime-local" class="form-control" id="rendezVous" name="rendezVous" th:value="${patient.rendezVous}" required>-->
+                    </div>
+                    <div
+                            class="d-flex justify-content-between align-items-center"
+                    > <button type="submit" class="btn btn-outline-primary">Enregistrer</button>
+                        <a th:href="@{/index}" class="btn btn-outline-primary">Retour</a>
+
+                    </div>
+
+                </form>
+            </div>
+          </div>
+          </div>
+        </div>
+        </div>
+    </div>
+    </div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template1">
+<head>
+    <meta charset="UTF-8">
+    <title>Patients</title>
+</head>
+<body>
+<div layout:fragment="content">
+<div>
+    <div class="card">
+        <div class="card-header">
+            Liste des patients
+        </div>
+        <div class="card-body">
+            <div class="d-flex justify-content-end me-5">
+                <form class="d-flex" th:action="@{/index}" method="get">
+                    <input class="form-control me-2" type="search" th:value="${keyword}" placeholder="Rechercher" aria-label="Search" name="keyword">
+                    <button class="btn btn-outline-primary" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+            </div>
+            <br>
+            <table class="table">
+                <thead >
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Date de naissance</th>
+                    <th>Malade</th>
+                    <th >Rendez-vous</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="patient : ${listPatients}">
+                    <td th:text="${patient.id}"></td>
+                    <td th:text="${patient.nom}"></td>
+                    <td th:text="${patient.dateNaissance}"></td>
+                    <td th:text="${patient.malade}"></td>
+                    <td th:text="${patient.rendezVous}"></td>
+                    <td>
+                        <a th:href="@{/editPatients(id=${patient.id})}"
+                           class="btn btn-warning"
+                           onclick="javascript:return confirm('Voulez-vous vraiment modifier ce patient ?')"
+                        >
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a th:href="@{/delete(id=${patient.id},keyword=${keyword},page=${currentPage})}"
+                           class="btn btn-danger"
+                            onclick="javascript:return confirm('Voulez-vous vraiment supprimer ce patient ?')"
+                        >
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <ul class="nav nav-pills">
+                <li th:each="page,itemInfo:${pages}" class="ms-2 mb-2">
+                    <a th:href="@{/index(page=${itemInfo.index},keyword=${keyword})}"
+                       th:text="${itemInfo.index+1}"
+                          th:class="${currentPage==itemInfo.index} ? 'btn btn-info' : 'btn btn-outline-info'"
+                    >
+                   </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
