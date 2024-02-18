@@ -8,11 +8,11 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ClassPathXmlCustomApplicationContext implements CustomApplicationContext {
+public class CustomClassPathXmlApplicationContext implements CustomApplicationContext {
     private final String configXml;
     private final Map<String, Object> beanMap;
 
-    public ClassPathXmlCustomApplicationContext(String configXml) {
+    public CustomClassPathXmlApplicationContext(String configXml) {
         this.configXml = configXml;
         this.beanMap = new HashMap<>();
         initializeBeans();
