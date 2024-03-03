@@ -23,7 +23,7 @@
                   <h1 class="text-center fs-3">Nouveau patient</h1>
               </div>
               <div class="card-body">
-                <form th:action="@{/savePatient}" method="post">
+                <form th:action="@{/admin/savePatient}" method="post">
                     <div class="mb-3">
                         <label for="nom" class="form-label">Nom</label>
                         <input type="text" class="form-control" id="nom" name="nom" th:value="${patient.nom}" required>
@@ -46,7 +46,7 @@
                     <div
                             class="d-flex justify-content-between align-items-center"
                     > <button type="submit" class="btn btn-outline-primary">Enregistrer</button>
-                        <a th:href="@{/index}" class="btn btn-outline-primary">Retour</a>
+                        <a th:href="@{/user/index}" class="btn btn-outline-primary">Retour</a>
 
                     </div>
 

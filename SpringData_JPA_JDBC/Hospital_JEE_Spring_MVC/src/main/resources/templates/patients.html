@@ -15,8 +15,9 @@
         </div>
         <div class="card-body">
             <div class="d-flex justify-content-end me-5">
-                <form class="d-flex" th:action="@{/index}" method="get">
-                    <input class="form-control me-2" type="search" th:value="${keyword}" placeholder="Rechercher" aria-label="Search" name="keyword">
+                <form class="d-flex" th:action="@{/user/index}" method="get">
+                    <input class="form-control me-2" type="search" th:value="${keyword}"
+                           placeholder="Rechercher" aria-label="Search" name="keyword">
                     <button class="btn btn-outline-primary" type="submit">
                         <i class="bi bi-search"></i>
                     </button>
@@ -39,15 +40,14 @@
                     <td th:text="${patient.nom}"></td>
                     <td th:text="${patient.dateNaissance}"></td>
                     <td th:text="${patient.malade}"></td>
-                    <td th:text="${patient.rendezVous}"></td>
-                    <td>
-                        <a th:href="@{/editPatients(id=${patient.id})}"
+
+                    <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                        <a th:href="@{/admin/editPatients(id=${patient.id})}"
                            class="btn btn-warning"
-                           onclick="javascript:return confirm('Voulez-vous vraiment modifier ce patient ?')"
                         >
                             <i class="bi bi-pencil"></i>
                         </a>
-                        <a th:href="@{/delete(id=${patient.id},keyword=${keyword},page=${currentPage})}"
+                        <a th:href="@{/admin/delete(id=${patient.id},keyword=${keyword},page=${currentPage})}"
                            class="btn btn-danger"
                             onclick="javascript:return confirm('Voulez-vous vraiment supprimer ce patient ?')"
                         >
@@ -59,7 +59,7 @@
             </table>
             <ul class="nav nav-pills">
                 <li th:each="page,itemInfo:${pages}" class="ms-2 mb-2">
-                    <a th:href="@{/index(page=${itemInfo.index},keyword=${keyword})}"
+                    <a th:href="@{/user/index(page=${itemInfo.index},keyword=${keyword})}"
                        th:text="${itemInfo.index+1}"
                           th:class="${currentPage==itemInfo.index} ? 'btn btn-info' : 'btn btn-outline-info'"
                     >
@@ -68,6 +68,9 @@
             </ul>
         </div>
     </div>
+
+
+
 </div>
 </div>
 </body>

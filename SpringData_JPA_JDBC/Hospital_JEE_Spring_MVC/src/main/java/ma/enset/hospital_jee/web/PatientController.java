@@ -22,7 +22,7 @@ public class PatientController {
     private PatientRepository patientRepository;
 
     // if the params with the same name we can get rid of the @RequestParam annotation
-    @GetMapping("/index")
+    @GetMapping("/user/index")
     public String index(Model model,
                         @RequestParam(name = "page",defaultValue = "0") int page,
                         @RequestParam(name = "size",defaultValue = "5")int size,
@@ -37,38 +37,38 @@ public class PatientController {
         return "patients";
     }
 
-    @GetMapping("/delete")
+    @GetMapping("/admin/delete")
     public String delete(Long id, String keyword, int page){
         patientRepository.deleteById(id);
 
-        return "redirect:/index?page="+page+"&keyword="+keyword;
+        return "redirect:/user/index?page="+page+"&keyword="+keyword;
     }
 
     @GetMapping("/")
     public String home(){
-        return "redirect:/index";
+        return "redirect:/user/index";
     }
 
-    @GetMapping("/formPatients")
+    @GetMapping("/admin/formPatients")
     public String formPatients(Model model){
         model.addAttribute("patient", new Patient());
         return "formPatients";
     }
 
-    @PostMapping("/savePatient")
+    @PostMapping("/admin/savePatient")
     public String savePatient(@Valid Patient patient, BindingResult bindingResult){
         if(!bindingResult.hasErrors()) {
             patientRepository.save(patient);
-            return "redirect:/index?keyword="+patient.getNom();
+            return "redirect:/user/index?keyword="+patient.getNom();
         }
         return "formPatients";
 
     }
 
-    @GetMapping("/editPatients")
+    @GetMapping("/admin/editPatients")
     public String editPatient(Model model, Long id){
         Optional<Patient> patient = patientRepository.findById(id);
-        if (patient.isEmpty()) return "redirect:/index";
+        if (patient.isEmpty()) return "redirect:/user/index";
 
         model.addAttribute("patient", patient.get());
         return "editPatients";
