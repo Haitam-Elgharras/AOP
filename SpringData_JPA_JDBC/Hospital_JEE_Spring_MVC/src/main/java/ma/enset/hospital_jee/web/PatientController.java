@@ -7,6 +7,7 @@ import ma.enset.hospital_jee.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,12 +40,24 @@ public class PatientController {
         return "patients";
     }
 
+//    @GetMapping("/admin/delete")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    public String deletePatient(@RequestParam("id") Long id,
+//                                @RequestParam("keyword") String keyword,
+//                                @RequestParam("page") int page){
+//        patientRepository.deleteById(id);
+//
+//        return "redirect:/user/index?page="+page+"&keyword="+keyword;
+//    }
+
     @GetMapping("/admin/delete")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String delete(Long id, String keyword, int page){
+    public ResponseEntity<String> deletePatient(@RequestParam("id") Long id,
+                                                @RequestParam("keyword") String keyword,
+                                                @RequestParam("page") int page){
         patientRepository.deleteById(id);
 
-        return "redirect:/user/index?page="+page+"&keyword="+keyword;
+        return ResponseEntity.ok("Patient deleted successfully");
     }
 
     @GetMapping("/")

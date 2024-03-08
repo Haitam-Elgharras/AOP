@@ -7,6 +7,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Patients</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const deleted = urlParams.get('deleted');
+
+            if (deleted === 'true') {
+                Swal.fire('Success!', 'The patient was successfully deleted.', 'success');
+            }
+
+            // Remove the deleted parameter from the URL
+            urlParams.delete('deleted');
+            history.replaceState({}, '', location.pathname + '?' + urlParams.toString());
+
+        }
+    </script>
+
 </head>
 <body>
 <div layout:fragment="content">
@@ -40,6 +57,7 @@
                 <tr th:each="p : ${listPatients}">
                     <td th:text="${p.id}"></td>
                     <td th:text="${p.nom}"></td>
+                    <td th:text="${p.prenom}"></td>
                     <td th:text="${p.dateNaissance}"></td>
                     <td th:text="${p.malade}"></td>
 
@@ -49,13 +67,49 @@
                         >
                             <i class="bi bi-pencil"></i>
                         </a>
+
                         <a th:href="@{/admin/delete(id=${p.id},keyword=${keyword},page=${currentPage})}"
+                           th:attr="data-delete-url=@{/admin/delete(id=${p.id},keyword=${keyword},page=${currentPage})},data-page=${currentPage},data-keyword=${keyword}"
                            class="btn btn-danger"
-                            onclick="javascript:return confirm('Voulez-vous vraiment supprimer ce patient ?')"
-                        >
+                           onclick="event.preventDefault();
+                           Swal.fire({
+    title: 'Are you sure?',
+    text: 'Deleting this patient cannot be undone.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Delete',
+    cancelButtonText: 'Cancel'
+}).then((result) => {
+    if (result.isConfirmed) {
+        // Retrieve the delete URL from the data attribute
+        const deleteUrl = this.getAttribute('data-delete-url');
+        // Retrieve the page and keyword from the data attributes
+        let page = this.getAttribute('data-page') || 0;
+        let keyword = this.getAttribute('data-keyword') || '';
+
+        fetch(deleteUrl, {
+            method: 'GET',
+        })
+        .then(response => response.text())  // Handle response
+        .then(async data => {
+            // Handle successful deletion (e.g., reload page, update UI)
+            if (data === 'Patient deleted successfully') {
+                window.location.href = '/user/index?page=' + page + '&keyword=' + keyword + '&deleted=true';
+            }
+        })
+        .catch(error => {
+            console.error('Error deleting patient:', error);
+            // Handle deletion error (e.g., show error message)
+        });
+    } else {
+        Swal.fire('Operation Cancelled!');
+    }
+}).catch(Swal.noop);">
                             <i class="bi bi-trash"></i>
                         </a>
-                    </td>
+                      </td>
                 </tr>
                 </tbody>
             </table>
