@@ -27,10 +27,11 @@ public class PatientController {
     public String index(Model model,
                         @RequestParam(name = "page",defaultValue = "0") int page,
                         @RequestParam(name = "size",defaultValue = "5")int size,
-                        @RequestParam(name="keyword",defaultValue = "") String kw
+                        @RequestParam(name="keyword",defaultValue = "") String kw,
+                        @RequestParam(name="keyword",defaultValue = "") String kw1
     )
     {
-        Page<Patient> pagePatients = patientRepository.findPatientByNomContains(kw, PageRequest.of(page, size));
+        Page<Patient> pagePatients = patientRepository.findPatientByNomContainsIgnoreCaseOrPrenomContainsIgnoreCase(kw,kw1,PageRequest.of(page, size));
         model.addAttribute("listPatients", pagePatients.getContent());
         model.addAttribute("pages", new int[pagePatients.getTotalPages()]);
         model.addAttribute("currentPage", page);
