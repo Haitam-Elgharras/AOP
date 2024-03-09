@@ -36,13 +36,13 @@ public class SecurityConfig {
     private final UserDetailServiceImpl userDetailsService;
 
 
-//    @Bean
+//    @Bean this for jdbc authentication
     public JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource) {
         return new JdbcUserDetailsManager(dataSource);
     }
 
 
-//    @Bean the bean will not be created now
+//    @Bean the bean will not be created now. this for in memory authentication
     public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
         return new InMemoryUserDetailsManager(
                 User.withUsername("user@gmail.com")
@@ -70,6 +70,11 @@ public class SecurityConfig {
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .defaultSuccessUrl("/", true)
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
                         .permitAll()
                 )
                 .rememberMe(rememberMe -> rememberMe

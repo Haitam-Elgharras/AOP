@@ -58,7 +58,7 @@ public class HospitalJeeSpringMvcApplication implements CommandLineRunner {
 
     }
 
-//    @Bean
+//    @Bean for jdbc authentication
     CommandLineRunner commandLineRunner(JdbcUserDetailsManager manager) {
         return args -> {
             if (!manager.userExists("admin2@gmail.com")) {

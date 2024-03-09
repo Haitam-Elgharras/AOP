@@ -9,12 +9,12 @@
     <title>Patients</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        window.onload = function() {
+        window.onload = function () {
             const urlParams = new URLSearchParams(window.location.search);
             const deleted = urlParams.get('deleted');
 
             if (deleted === 'true') {
-                Swal.fire('Success!', 'The patient was successfully deleted.', 'success');
+                Swal.fire('Succès!', 'Le patient a été supprimé avec succès.', 'success');
             }
 
             // Remove the deleted parameter from the URL
@@ -27,108 +27,110 @@
 </head>
 <body>
 <div layout:fragment="content">
-<div>
-    <div class="card">
-        <div class="card-header">
-            Liste des patients
-        </div>
-        <div class="card-body">
-            <div class="d-flex justify-content-end me-5">
-                <form class="d-flex" th:action="@{/user/index}" method="get">
-                    <input class="form-control me-2" type="search" th:value="${keyword}"
-                           placeholder="Rechercher" aria-label="Search" name="keyword">
-                    <button class="btn btn-outline-primary" type="submit">
-                        <i class="bi bi-search"></i>
-                    </button>
-                </form>
+    <div>
+        <div class="card">
+            <div class="card-header">
+                Liste des patients
             </div>
-            <br>
-            <table class="table">
-                <thead >
-                <tr>
-                    <th>Id</th>
-                    <th>Nom</th>
-                    <th>Date de naissance</th>
-                    <th>Malade</th>
-                    <th >Rendez-vous</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="p : ${listPatients}">
-                    <td th:text="${p.id}"></td>
-                    <td th:text="${p.nom}"></td>
-                    <td th:text="${p.prenom}"></td>
-                    <td th:text="${p.dateNaissance}"></td>
-                    <td th:text="${p.malade}"></td>
+            <div class="card-body">
+                <div class="d-flex justify-content-end me-5">
+                    <form class="d-flex" th:action="@{/user/index}" method="get">
+                        <input class="form-control me-2" type="search" th:value="${keyword}"
+                               placeholder="Rechercher" aria-label="Search" name="keyword">
+                        <button class="btn btn-outline-primary" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </form>
+                </div>
+                <br>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nom</th>
+                        <th>Date de naissance</th>
+                        <th>Malade</th>
+                        <th>Rendez-vous</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="p : ${listPatients}">
+                        <td th:text="${p.id}"></td>
+                        <td th:text="${p.nom}"></td>
+                        <td th:text="${p.prenom}"></td>
+                        <td th:text="${p.dateNaissance}"></td>
+                        <td th:text="${p.malade}"></td>
 
-                    <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-                        <a th:href="@{/admin/editPatients(id=${p.id})}"
-                           class="btn btn-warning"
-                        >
-                            <i class="bi bi-pencil"></i>
-                        </a>
+                        <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                            <a th:href="@{/admin/editPatients(id=${p.id})}"
+                               class="btn btn-warning"
+                            >
+                                <i class="bi bi-pencil"></i>
+                            </a>
 
-                        <a th:href="@{/admin/delete(id=${p.id},keyword=${keyword},page=${currentPage})}"
-                           th:attr="data-delete-url=@{/admin/delete(id=${p.id},keyword=${keyword},page=${currentPage})},data-page=${currentPage},data-keyword=${keyword}"
-                           class="btn btn-danger"
-                           onclick="event.preventDefault();
+                            <a th:href="@{/admin/delete(id=${p.id},keyword=${keyword},page=${currentPage})}"
+                               th:attr="data-delete-url=@{/admin/delete(id=${p.id},keyword=${keyword},page=${currentPage})},data-page=${currentPage},data-keyword=${keyword}"
+                               class="btn btn-danger"
+                               onclick="event.preventDefault();
                            Swal.fire({
-    title: 'Are you sure?',
-    text: 'Deleting this patient cannot be undone.',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#d33',
-    cancelButtonColor: '#3085d6',
-    confirmButtonText: 'Delete',
-    cancelButtonText: 'Cancel'
-}).then((result) => {
-    if (result.isConfirmed) {
-        // Retrieve the delete URL from the data attribute
-        const deleteUrl = this.getAttribute('data-delete-url');
-        // Retrieve the page and keyword from the data attributes
-        let page = this.getAttribute('data-page') || 0;
-        let keyword = this.getAttribute('data-keyword') || '';
+                                title: 'Vous êtes sûr?',
+                                text: 'La suppression de ce patient est irréversible!',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#d33',
+                                cancelButtonColor: '#3085d6',
+                                confirmButtonText: 'Supprimer',
+                                cancelButtonText: 'Annuler'
+                                })
+                                .then((result) => {
+                                    if (result.isConfirmed) {
+                                        // Retrieve the delete URL from the data attribute
+                                        const deleteUrl = this.getAttribute('data-delete-url');
+                                        // Retrieve the page and keyword from the data attributes
+                                        let page = this.getAttribute('data-page') || 0;
+                                        let keyword = this.getAttribute('data-keyword') || '';
 
-        fetch(deleteUrl, {
-            method: 'GET',
-        })
-        .then(response => response.text())  // Handle response
-        .then(async data => {
-            // Handle successful deletion (e.g., reload page, update UI)
-            if (data === 'Patient deleted successfully') {
-                window.location.href = '/user/index?page=' + page + '&keyword=' + keyword + '&deleted=true';
-            }
-        })
-        .catch(error => {
-            console.error('Error deleting patient:', error);
-            // Handle deletion error (e.g., show error message)
-        });
-    } else {
-        Swal.fire('Operation Cancelled!');
-    }
-}).catch(Swal.noop);">
-                            <i class="bi bi-trash"></i>
+                                        fetch(deleteUrl, {
+                                            method: 'GET',
+                                        })
+                                .then(response => response.text())  // Handle response
+                                .then(async data => {
+                                    // Handle successful deletion (e.g., reload page, update UI)
+                                    if (data === 'Patient deleted successfully') {
+                                        window.location.href = '/user/index?page=' + page + '&keyword=' + keyword + '&deleted=true';
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error deleting patient:', error);
+                                    // Handle deletion error (e.g., show error message)
+                                });
+                            } else {
+                                Swal.fire('La suppression a été annulée.');
+                            }
+                            })
+                            .catch(Swal.noop);">
+
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <ul class="nav nav-pills">
+                    <li th:each="page,itemInfo:${pages}" class="ms-2 mb-2">
+
+                        <a th:href="@{/user/index(page=${itemInfo.index},keyword=${keyword})}"
+                           th:text="${itemInfo.index+1}"
+                           th:class="${currentPage==itemInfo.index} ? 'btn btn-info' : 'btn btn-outline-info'"
+                        >
                         </a>
-                      </td>
-                </tr>
-                </tbody>
-            </table>
-            <ul class="nav nav-pills">
-                <li th:each="page,itemInfo:${pages}" class="ms-2 mb-2">
-
-                    <a th:href="@{/user/index(page=${itemInfo.index},keyword=${keyword})}"
-                       th:text="${itemInfo.index+1}"
-                       th:class="${currentPage==itemInfo.index} ? 'btn btn-info' : 'btn btn-outline-info'"
-                    >
-                   </a>
-                </li>
-            </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
+
+
     </div>
-
-
-
-</div>
 </div>
 </body>
 </html>
